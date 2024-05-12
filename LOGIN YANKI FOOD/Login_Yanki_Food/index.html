@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html> 
+<head>
+    <title>Iniciar Sesion</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+    
+    <script>
+        $(document).ready(function () {
+            $("#loginForm").submit(function (event) {
+                event.preventDefault();
+
+                var nombre_usuario = $("#nombre_usuario").val();
+                var contrasena = $("#contrasena").val();                
+
+                var data = {
+                    nombre_usuario: nombre_usuario,
+                    contrasena: contrasena,                    
+                };
+                
+                $.ajax({
+                    type: "POST",
+                    url: "verificar_login.php",
+                    data: data,
+                    success: function (response) {
+                        console.log(response)
+                        if (response === "Inicio Exitoso") {
+                            $("#mensajeSuccess").html("Inicio de Sesion Exitoso");
+                            $("#mensajeSuccess").show(); // Mostrar mensaje de éxito
+                            $("#mensajeError").hide();  // Ocultar mensaje de error
+                            window.location.href="home.html";
+                        } else {
+                            $("#mensajeError").html("Usuario o contrasena incorrectos.");
+                            $("#mensajeError").show(); // Mostrar mensaje de error
+                            $("#mensajeSuccess").hide();  // Ocultar mensaje de exito
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+    
+</head>
+<main class="servicio">
+    <div class="servicio-contenido container"> </div>
+</main>
+<body>
+   
+    <div>
+        <h1><p>YANKI FOOD STYLE</p></h1>
+    </div>
+    <div class="main">
+        <div class="login">
+            <div class='correcto' id="mensajeSuccess"></div>
+            <div class='error' id="mensajeError"></div>
+            <form id="loginForm">
+                <h2><p>Iniciar Sesion </p></h2>
+                <input type="text" name="nombre_usuario" id="nombre_usuario" placeholder="Usuario" required>
+                <input type="password" name="contrasena" id="contrasena" placeholder="Contrasena" required>
+                <button type="submit">Iniciar Sesion</button> <head>
+                <button onclick="window.location.href='formulario.html'">Registro</button>                                    
+            </form>            
+        </div>
+    </div>    
+</body>
+</html>

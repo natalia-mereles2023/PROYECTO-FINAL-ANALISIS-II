@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulario de Registros</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" type="text/css" href="index.css">
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="script.js"></script>
+   <link rel="stylesheet" href="button.css">
+   
+   
+</head>
+<body>
+    <div>
+        <h1><p>YANKI FOOD STYLE</p></h1>
+    </div>
+    <div class="container">
+       
+            <form action="procesar_formulario.php" method="post">
+                <center><h2><p>REGISTRO DE USUARIO </p></h2></center><h2>
+               
+                   
+                    <center><input type="text" name="nombre_usuario" id="nombre_usuario" placeholder="Usuario" required></center>
+
+                    <center><input type="password" name="contrasena" id="contrasena" placeholder="Contrasenia" required></center>
+               
+            </form>
+            
+            <div><p><input type="submit" value="Registrar" class="btn btn-primary"></p>        
+            <button onclick="window.location.href='index.html'">Inicio</button></div>    
+    
+    </div>
+    <script>	
+        window.location.hash="no-back-button";
+        window.location.hash="Again-No-back-button";
+        window.onhashchange=function(){window.location.hash="no-back-button";}
+        </script>
+</body>
+</html>
+
