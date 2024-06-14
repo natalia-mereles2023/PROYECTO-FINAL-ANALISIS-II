@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3308
--- Tiempo de generación: 12-05-2024 a las 15:35:38
+-- Tiempo de generación: 22-05-2024 a las 14:06:52
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 7.4.29
 
@@ -18,72 +18,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `yanky_food`
+-- Base de datos: `tp2`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categoria`
---
-
-CREATE TABLE `categoria` (
-  `id_categoria` int(11) NOT NULL,
-  `categoria` varchar(240) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `categoria`
---
-
-INSERT INTO `categoria` (`id_categoria`, `categoria`) VALUES
-(1, 'cliente WSP'),
-(2, 'Cliente Local'),
-(3, 'Mozo'),
-(4, 'Repartidor'),
-(5, 'Proveedor'),
-(6, 'Cocinero');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `facturacion`
---
-
-CREATE TABLE `facturacion` (
-  `id_facturacion` int(11) NOT NULL,
-  `rela_pedido` int(11) NOT NULL,
-  `fecha` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `inventario`
---
-
-CREATE TABLE `inventario` (
-  `id_inventario` int(11) NOT NULL,
-  `rela_producto` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `precio` float NOT NULL,
-  `fecha_compra` date NOT NULL,
-  `fecha_entrada` date NOT NULL,
-  `rela_proveedor` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `login`
---
-
-CREATE TABLE `login` (
-  `id_login` int(11) NOT NULL,
-  `usuario` varchar(50) NOT NULL,
-  `contrasenia` varchar(50) NOT NULL,
-  `rela_personas` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -93,130 +29,107 @@ CREATE TABLE `login` (
 
 CREATE TABLE `menu` (
   `id_menu` int(11) NOT NULL,
-  `especialidad` varchar(240) NOT NULL,
-  `precio` float NOT NULL,
-  `foto` mediumblob NOT NULL
+  `nombre` varchar(150) NOT NULL,
+  `precio` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `menu`
+--
+
+INSERT INTO `menu` (`id_menu`, `nombre`, `precio`) VALUES
+(1, 'Gran Yanki Chedar', 3200),
+(2, 'Yanki Two Chedar', 2700),
+(3, 'BIG Yanki LOMO', 4500),
+(4, 'Picada Yanki con Todo ', 7300),
+(6, 'Grand Pizza de peperoni', 5600),
+(7, 'Muzzarella y palmitos', 7340);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `mozo`
+-- Estructura de tabla para la tabla `proveedores`
 --
 
-CREATE TABLE `mozo` (
-  `id_mozo` int(11) NOT NULL,
-  `rela_personas` int(11) NOT NULL,
-  `dias_disponibles` varchar(240) NOT NULL
+CREATE TABLE `proveedores` (
+  `id_prov` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
+  `direccion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `proveedores`
+--
+
+INSERT INTO `proveedores` (`id_prov`, `nombre`, `apellido`, `direccion`) VALUES
+(1, 'Alberto', 'Castillo', 'Fontana 325'),
+(2, 'Laura ', 'Arrua', 'San Martin 654'),
+(3, 'Lautaro', 'Lorenzo', 'Belgrano 789'),
+(4, 'Paula ', 'Robles', 'Lomas Altas 159'),
+(5, 'Claudia ', 'Platon', 'Vedia 753'),
+(6, 'Pablo ', 'Alondra', 'Junin 1576');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pedido`
+-- Estructura de tabla para la tabla `stock`
 --
 
-CREATE TABLE `pedido` (
-  `id_pedido` int(11) NOT NULL,
-  `rela_personas` int(11) NOT NULL,
-  `rela_repartidor` int(11) NOT NULL,
-  `rela_menu` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `mesa` int(11) NOT NULL,
-  `rela_mozo` int(11) NOT NULL
+CREATE TABLE `stock` (
+  `id_stock` int(11) NOT NULL,
+  `nombre` varchar(244) NOT NULL,
+  `cantidad` int(10) NOT NULL,
+  `rela_prov` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `stock`
+--
+
+INSERT INTO `stock` (`id_stock`, `nombre`, `cantidad`, `rela_prov`) VALUES
+(2, 'Harina', 185, 6),
+(3, 'Tomate', 15, 5),
+(4, 'Lechuga', 10, 5),
+(5, 'Levadura', 5, 6),
+(6, 'Carne molida', 22, 3),
+(7, 'Aceite', 35, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `personas`
+-- Estructura de tabla para la tabla `usu`
 --
 
-CREATE TABLE `personas` (
-  `id_personas` int(11) NOT NULL,
-  `apellido` varchar(240) NOT NULL,
-  `nombre` varchar(240) NOT NULL,
-  `cuit` int(11) NOT NULL,
-  `telef_celular` int(11) NOT NULL,
-  `calle` varchar(240) NOT NULL,
-  `numero` int(11) NOT NULL,
-  `piso` int(11) NOT NULL,
-  `depto` varchar(11) NOT NULL,
-  `casa` int(11) NOT NULL,
-  `sector` varchar(11) NOT NULL,
-  `manzana` varchar(11) NOT NULL,
-  `barrio` varchar(240) NOT NULL,
-  `rela_categoria` int(11) NOT NULL,
-  `email` varchar(240) NOT NULL
+CREATE TABLE `usu` (
+  `id_usuario` int(11) NOT NULL,
+  `nombre_usuario` varchar(50) NOT NULL,
+  `contrasena` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `producto`
+-- Volcado de datos para la tabla `usu`
 --
 
-CREATE TABLE `producto` (
-  `id_producto` int(11) NOT NULL,
-  `nombre_producto` varchar(240) NOT NULL,
-  `rela_proveedor` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `proveedor`
---
-
-CREATE TABLE `proveedor` (
-  `id_proveedor` int(11) NOT NULL,
-  `rela_personas` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `repartidor`
---
-
-CREATE TABLE `repartidor` (
-  `id_repartidor` int(11) NOT NULL,
-  `rela_personas` int(11) NOT NULL,
-  `dias_disponibles` varchar(240) NOT NULL,
-  `horarios_disponibles` varchar(240) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `usu` (`id_usuario`, `nombre_usuario`, `contrasena`, `email`) VALUES
+(2, 'gusgonza', '321', 'gn@gmail.com'),
+(12, 'Claudia ', 'Platon', 'clau@gmail.com'),
+(13, 'Pablo ', 'Alondra', 'Junin 1576'),
+(14, 'Dante ', '456', 'dante@gmail.com'),
+(15, 'Daniela', '456', 'dani@gmail.com'),
+(16, 'edeo', '456', 'tedeo@gmail.com'),
+(17, 'Vale', '8945', 'vale@gmail.com'),
+(24, 'Patri', '753', 'patri@gmail.com'),
+(25, 'gauto', '456', 'ga@gmail.com'),
+(26, 'gauto', '123', 'gauto@gmail.com'),
+(27, 'polo', '456', ''),
+(28, 'carlo', '789', ''),
+(29, 'TOTO', '753', '');
 
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `categoria`
---
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`id_categoria`);
-
---
--- Indices de la tabla `facturacion`
---
-ALTER TABLE `facturacion`
-  ADD PRIMARY KEY (`id_facturacion`),
-  ADD KEY `rela_pedido` (`rela_pedido`);
-
---
--- Indices de la tabla `inventario`
---
-ALTER TABLE `inventario`
-  ADD PRIMARY KEY (`id_inventario`),
-  ADD KEY `rela_producto` (`rela_producto`),
-  ADD KEY `rela_proveedor` (`rela_proveedor`);
-
---
--- Indices de la tabla `login`
---
-ALTER TABLE `login`
-  ADD PRIMARY KEY (`id_login`),
-  ADD KEY `rela_personas` (`rela_personas`);
 
 --
 -- Indices de la tabla `menu`
@@ -225,111 +138,61 @@ ALTER TABLE `menu`
   ADD PRIMARY KEY (`id_menu`);
 
 --
--- Indices de la tabla `mozo`
+-- Indices de la tabla `proveedores`
 --
-ALTER TABLE `mozo`
-  ADD PRIMARY KEY (`id_mozo`),
-  ADD KEY `relapersonas` (`rela_personas`);
+ALTER TABLE `proveedores`
+  ADD PRIMARY KEY (`id_prov`);
 
 --
--- Indices de la tabla `pedido`
+-- Indices de la tabla `stock`
 --
-ALTER TABLE `pedido`
-  ADD PRIMARY KEY (`id_pedido`),
-  ADD KEY `rela_menu` (`rela_menu`),
-  ADD KEY `rela_personas` (`rela_personas`),
-  ADD KEY `rela_mozo` (`rela_repartidor`),
-  ADD KEY `relamozo` (`rela_mozo`);
+ALTER TABLE `stock`
+  ADD PRIMARY KEY (`id_stock`),
+  ADD KEY `id_prov` (`rela_prov`);
 
 --
--- Indices de la tabla `personas`
+-- Indices de la tabla `usu`
 --
-ALTER TABLE `personas`
-  ADD PRIMARY KEY (`id_personas`),
-  ADD KEY `rela_categoria` (`rela_categoria`);
+ALTER TABLE `usu`
+  ADD PRIMARY KEY (`id_usuario`);
 
 --
--- Indices de la tabla `producto`
+-- AUTO_INCREMENT de las tablas volcadas
 --
-ALTER TABLE `producto`
-  ADD PRIMARY KEY (`id_producto`),
-  ADD KEY `rela_proveedor` (`rela_proveedor`);
 
 --
--- Indices de la tabla `proveedor`
+-- AUTO_INCREMENT de la tabla `menu`
 --
-ALTER TABLE `proveedor`
-  ADD PRIMARY KEY (`id_proveedor`),
-  ADD KEY `rela_personas` (`rela_personas`);
+ALTER TABLE `menu`
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- Indices de la tabla `repartidor`
+-- AUTO_INCREMENT de la tabla `proveedores`
 --
-ALTER TABLE `repartidor`
-  ADD PRIMARY KEY (`id_repartidor`),
-  ADD KEY `rela_persona` (`rela_personas`);
+ALTER TABLE `proveedores`
+  MODIFY `id_prov` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `stock`
+--
+ALTER TABLE `stock`
+  MODIFY `id_stock` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `usu`
+--
+ALTER TABLE `usu`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `facturacion`
+-- Filtros para la tabla `stock`
 --
-ALTER TABLE `facturacion`
-  ADD CONSTRAINT `facturacion_ibfk_1` FOREIGN KEY (`rela_pedido`) REFERENCES `pedido` (`id_pedido`);
-
---
--- Filtros para la tabla `inventario`
---
-ALTER TABLE `inventario`
-  ADD CONSTRAINT `inventario_ibfk_1` FOREIGN KEY (`rela_producto`) REFERENCES `producto` (`id_producto`),
-  ADD CONSTRAINT `inventario_ibfk_2` FOREIGN KEY (`rela_proveedor`) REFERENCES `proveedor` (`id_proveedor`);
-
---
--- Filtros para la tabla `login`
---
-ALTER TABLE `login`
-  ADD CONSTRAINT `login_ibfk_1` FOREIGN KEY (`rela_personas`) REFERENCES `personas` (`id_personas`);
-
---
--- Filtros para la tabla `mozo`
---
-ALTER TABLE `mozo`
-  ADD CONSTRAINT `mozo_ibfk_1` FOREIGN KEY (`rela_personas`) REFERENCES `personas` (`id_personas`);
-
---
--- Filtros para la tabla `pedido`
---
-ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`rela_personas`) REFERENCES `personas` (`id_personas`),
-  ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`rela_mozo`) REFERENCES `mozo` (`id_mozo`),
-  ADD CONSTRAINT `pedido_ibfk_4` FOREIGN KEY (`rela_menu`) REFERENCES `menu` (`id_menu`),
-  ADD CONSTRAINT `pedido_ibfk_5` FOREIGN KEY (`rela_repartidor`) REFERENCES `repartidor` (`id_repartidor`);
-
---
--- Filtros para la tabla `personas`
---
-ALTER TABLE `personas`
-  ADD CONSTRAINT `personas_ibfk_1` FOREIGN KEY (`rela_categoria`) REFERENCES `categoria` (`id_categoria`);
-
---
--- Filtros para la tabla `producto`
---
-ALTER TABLE `producto`
-  ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`rela_proveedor`) REFERENCES `proveedor` (`id_proveedor`);
-
---
--- Filtros para la tabla `proveedor`
---
-ALTER TABLE `proveedor`
-  ADD CONSTRAINT `proveedor_ibfk_1` FOREIGN KEY (`rela_personas`) REFERENCES `personas` (`id_personas`);
-
---
--- Filtros para la tabla `repartidor`
---
-ALTER TABLE `repartidor`
-  ADD CONSTRAINT `repartidor_ibfk_1` FOREIGN KEY (`rela_personas`) REFERENCES `personas` (`id_personas`);
+ALTER TABLE `stock`
+  ADD CONSTRAINT `stock_ibfk_1` FOREIGN KEY (`rela_prov`) REFERENCES `proveedores` (`id_prov`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

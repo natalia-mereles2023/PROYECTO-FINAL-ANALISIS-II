@@ -6,7 +6,7 @@
    
 
     // Conexión a la base de datos (reemplaza con tus propios datos)
-    $servername = "localhost:3308";
+    $servername = "localhost:3306";
     $username = "root";
     $password = "perroo";
     $dbname = "tp2";
